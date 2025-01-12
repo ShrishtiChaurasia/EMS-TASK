@@ -1,0 +1,86 @@
+const sampleTasks = [
+  {
+    title: "Complete project report",
+    description:
+      "Prepare the final project report and submit it before the deadline.",
+    status: "In Progress",
+    priority: "High",
+    dueDate: new Date("2025-01-15"),
+    createdAt: new Date(),
+  },
+  {
+    title: "Fix website bugs",
+    description: "Identify and fix UI/UX bugs on the company website.",
+    status: "Pending",
+    priority: "Medium",
+    dueDate: new Date("2025-01-18"),
+    createdAt: new Date(),
+  },
+  {
+    title: "Schedule team meeting",
+    description: "Plan and schedule a meeting with the development team.",
+    status: "Completed",
+    priority: "Low",
+    dueDate: new Date("2025-01-10"),
+    createdAt: new Date(),
+  },
+  {
+    title: "Write blog post",
+    description: "Create a blog post about the latest technology trends.",
+    status: "Pending",
+    priority: "Medium",
+    dueDate: new Date("2025-01-20"),
+    createdAt: new Date(),
+  },
+  {
+    title: "Update documentation",
+    description: "Revise and update the project documentation.",
+    status: "In Progress",
+    priority: "High",
+    dueDate: new Date("2025-01-22"),
+    createdAt: new Date(),
+  },
+  {
+    title: "Test new feature",
+    description: "Perform testing on the newly implemented feature.",
+    status: "Pending",
+    priority: "High",
+    dueDate: new Date("2025-01-17"),
+    createdAt: new Date(),
+  },
+  {
+    title: "Client follow-up",
+    description:
+      "Send an email follow-up to the client regarding project updates.",
+    status: "Completed",
+    priority: "Medium",
+    dueDate: new Date("2025-01-12"),
+    createdAt: new Date(),
+  },
+  {
+    title: "Create wireframes",
+    description: "Design wireframes for the upcoming mobile application.",
+    status: "Pending",
+    priority: "High",
+    dueDate: new Date("2025-01-25"),
+    createdAt: new Date(),
+  },
+  {
+    title: "Optimize database",
+    description: "Optimize database queries for better performance.",
+    status: "In Progress",
+    priority: "High",
+    dueDate: new Date("2025-01-19"),
+    createdAt: new Date(),
+  },
+  {
+    title: "Prepare presentation",
+    description: "Create a presentation for the next team meeting.",
+    status: "Pending",
+    priority: "Medium",
+    dueDate: new Date("2025-01-21"),
+    createdAt: new Date(),
+  },
+];
+
+module.exports = { data: sampleTasks };
