@@ -4,6 +4,7 @@ const Task = require("../models/taskSchema");
 const WrapAsync = require("../utils/WrapAsync");
 const Expresserror = require("../utils/ExpressError");
 const { TaskSchema } = require("../Schema/taskSchema");
+const { isLoggedIn } = require("../middleware/isLoddedin");
 
 const ValidateTasks = (req, res, next) => {
   let { error } = TaskSchema.validate(req.body, { abortEarly: false });
