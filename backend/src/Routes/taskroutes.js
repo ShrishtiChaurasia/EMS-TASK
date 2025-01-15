@@ -2,6 +2,21 @@ const express = require("express");
 const router = express.Router();
 const Task = require("../models/taskSchema");
 const WrapAsync = require("../utils/WrapAsync");
+const Expresserror = require("../utils/ExpressError");
+const { TaskSchema } = require("../Schema/taskSchema");
+
+const ValidateTasks = (req, res, next) => {
+  let { error } = TaskSchema.validate(req.body, { abortEarly: false });
+
+  if (error) {
+    return res.status(400).json({
+      message: "Validation failed",
+      errors: error.details.map((err) => err.message),
+    });
+  } else {
+    next();
+  }
+};
 
 router.get(
   "/",
@@ -13,9 +28,11 @@ router.get(
 
 router.post(
   "/",
+  ValidateTasks,
   WrapAsync(async (req, res) => {
     const newTask = await new Task(req.body);
     await newTask.save();
+    req.flash("success", "new added");
     res.status(201).json(newTask);
   })
 );
@@ -42,6 +59,9 @@ router.get(
 router.put(
   "/:id",
   WrapAsync(async (req, res) => {
+    if (!req.body.Task) {
+      throw new Expresserror(400, "send valid data for add Task!");
+    }
     const { id } = req.params;
     const updatedData = await Task.findByIdAndUpdate(id, req.body, {
       new: true, // Returns the updated document

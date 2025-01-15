@@ -4,6 +4,8 @@ import Homepage from "../Pages/Homepage";
 import AddTask from "../Pages/AddTask";
 import EditTask from "../Pages/EditTask";
 import ErrorPage from "../Pages/ErrorPage";
+import SignUp from "../Components/SignUp";
+import Login from "../Components/Login";
 
 const approut = createBrowserRouter([
   {
@@ -17,6 +19,14 @@ const approut = createBrowserRouter([
       {
         path: "/add",
         element: <AddTask />,
+      },
+      {
+        path: "/signup",
+        element: <SignUp />,
+      },
+      {
+        path: "/login",
+        element: <Login />,
       },
       {
         path: "/:id/edit",

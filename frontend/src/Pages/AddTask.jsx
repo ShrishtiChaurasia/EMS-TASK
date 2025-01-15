@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Addtasks } from "../api/taskapi";
 
 const AddTask = () => {
@@ -8,6 +9,8 @@ const AddTask = () => {
     status: "Pending",
     priority: "Low",
   });
+
+  const navigate = useNavigate(); // ✅ For redirecting to Homepage
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -21,9 +24,8 @@ const AddTask = () => {
     e.preventDefault();
 
     try {
-      const res = await Addtasks(formData);
-      alert("Task added successfully!");
-      window.location.href = "/";
+      await Addtasks(formData);
+      navigate("/", { state: { successMessage: "Task added successfully!" } }); // ✅ Redirect with success message
     } catch (err) {
       console.log("An error occurred:", err);
     }
@@ -77,9 +79,9 @@ const AddTask = () => {
             name="status"
             className="w-full p-2 border border-gray-300 rounded-md"
           >
-            <option value="pending">Pending</option>
-            <option value="in-progress">In Progress</option>
-            <option value="completed">Completed</option>
+            <option value="Pending">Pending</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Completed">Completed</option>
           </select>
         </div>
 
@@ -97,9 +99,9 @@ const AddTask = () => {
             onChange={handleChange}
             className="w-full p-2 border border-gray-300 rounded-md"
           >
-            <option value="low">Low</option>
-            <option value="medium">Medium</option>
-            <option value="high">High</option>
+            <option value="Low">Low</option>
+            <option value="Medium">Medium</option>
+            <option value="High">High</option>
           </select>
         </div>
 

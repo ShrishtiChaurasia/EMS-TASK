@@ -1,45 +1,38 @@
 const express = require("express");
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const User = require("../models/userSchema");
 const router = express.Router();
+const User = require("../models/userSchema.js");
+const WrapAsync = require("../utils/WrapAsync.js");
+const passport = require("passport");
 
-// Register user
-router.post("/register", async (req, res) => {
-  const { name, email, password } = req.body;
-  try {
-    let user = await User.findOne({ email });
-    if (user) return res.status(400).json({ message: "User already exists" });
+router.post(
+  "/signup",
+  WrapAsync(async (req, res) => {
+    try {
+      let { username, email, password } = req.body;
 
-    const hashedPassword = await bcrypt.hash(password, 10);
-    user = new User({ name, email, password: hashedPassword });
-    await user.save();
+      let newUser = new User({ email, username });
+      const registeredUser = await User.register(newUser, password);
 
-    res.status(201).json({ message: "User registered successfully" });
-  } catch (error) {
-    res.status(500).json({ message: "Server Error" });
+      console.log(registeredUser);
+
+      res.status(201).json({ message: "User added successfully!" });
+    } catch (error) {
+      console.error("Signup Error:", error);
+      res.status(500).json({ error: "Something went wrong. Try again later." });
+    }
+  })
+);
+
+router.post(
+  "/login",
+  passport.authenticate("local", {
+    failureRedirect: "/login",
+    failureFlash: true,
+  }),
+  (req, res) => {
+    req.flash("success", "Welcome!");
+    res.redirect("/");
   }
-});
-
-// Login user
-router.post("/login", async (req, res) => {
-  const { email, password } = req.body;
-  try {
-    const user = await User.findOne({ email });
-    if (!user) return res.status(400).json({ message: "Invalid credentials" });
-
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch)
-      return res.status(400).json({ message: "Invalid credentials" });
-
-    const token = jwt.sign({ userId: user._id }, "SECRET_KEY", {
-      expiresIn: "1h",
-    });
-
-    res.json({ token });
-  } catch (error) {
-    res.status(500).json({ message: "Server Error" });
-  }
-});
+);
 
 module.exports = router;
